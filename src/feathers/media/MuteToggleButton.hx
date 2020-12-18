@@ -461,7 +461,7 @@ class MuteToggleButton extends ToggleButton implements IMediaPlayerControl
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value, propertyName));
 			}
 			value = newValue;
 		}

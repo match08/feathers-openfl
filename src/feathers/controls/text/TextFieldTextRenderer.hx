@@ -6,7 +6,6 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.text;
-import com.jaimedominguez.util.debug.InArray;
 import feathers.core.FeathersControl;
 import feathers.core.ITextRenderer;
 import feathers.skins.IStyleProvider;
@@ -18,7 +17,6 @@ import feathers.utils.geom.FeathersMatrixUtil.matrixToScaleX;
 import feathers.utils.geom.FeathersMatrixUtil.matrixToScaleY;
 #end
 import feathers.utils.type.ArrayUtil;
-import haxe.CallStack;
 
 import openfl.display.BitmapData;
 import openfl.display3D.Context3DProfile;
@@ -200,7 +198,6 @@ class TextFieldTextRenderer extends FeathersControl implements ITextRenderer
 	 */
 	public function set_text(value:String):String
 	{
-		
 		if(this._text == value)
 		{
 			return this._text;
@@ -1355,7 +1352,7 @@ class TextFieldTextRenderer extends FeathersControl implements ITextRenderer
 			this.textField.gridFitType = this._gridFitType;
 			this.textField.sharpness = this._sharpness;
 			#if flash
-			this.textField.thickness = this._thickness;
+			// this.textField.thickness = this._thickness;
 			#end
 			this.textField.filters = this._nativeFilters;
 		}

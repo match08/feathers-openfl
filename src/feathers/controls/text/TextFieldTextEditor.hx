@@ -1701,7 +1701,7 @@ class TextFieldTextEditor extends FeathersControl implements ITextEditor impleme
 		textField.gridFitType = this._gridFitType;
 		textField.sharpness = this._sharpness;
 		#if flash
-		textField.thickness = this._thickness;
+		// textField.thickness = this._thickness;
 		#end
 		textField.maxChars = this._maxChars;
 		textField.restrict = this._restrict;

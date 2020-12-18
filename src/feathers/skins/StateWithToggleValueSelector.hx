@@ -18,7 +18,7 @@ import openfl.utils.Dictionary;
  * Maps a component's states to values, perhaps for one of the component's
  * properties such as a skin or text format.
  */
-class StateWithToggleValueSelector
+class StateWithToggleValueSelector<T>
 {
 	/**
 	 * Constructor.
@@ -32,24 +32,24 @@ class StateWithToggleValueSelector
 	 * Stores the values for each state.
 	 */
 #if flash
-	private var stateToValue:WeakMap<String, Dynamic> = new WeakMap();
+	private var stateToValue:WeakMap<String, T> = new WeakMap();
 #else
-	private var stateToValue:Map<String, Dynamic> = new Map();
+	private var stateToValue:Map<String, T> = new Map();
 #end
 	/**
 	 * @private
 	 * Stores the values for each state where isSelected is true.
 	 */
 #if flash
-	private var stateToSelectedValue:WeakMap<String, Dynamic> = new WeakMap();
+	private var stateToSelectedValue:WeakMap<String, T> = new WeakMap();
 #else
-	private var stateToSelectedValue:Map<String, Dynamic> = new Map();
+	private var stateToSelectedValue:Map<String, T> = new Map();
 #end
 	/**
 	 * If there is no value for the specified state, a default value can
 	 * be used as a fallback.
 	 */
-	public var defaultValue:Dynamic;
+	public var defaultValue:T;
 
 	/**
 	 * If the target is a selected IToggle instance, and if there is no
@@ -58,13 +58,13 @@ class StateWithToggleValueSelector
 	 *
 	 * @see feathers.core.IToggle
 	 */
-	public var defaultSelectedValue:Dynamic;
+	public var defaultSelectedValue:T;
 
 	/**
 	 * Stores a value for a specified state to be returned from
 	 * getValueForState().
 	 */
-	public function setValueForState(value:Dynamic, state:String, isSelected:Bool = false):Void
+	public function setValueForState(value:T, state:String, isSelected:Bool = false):Void
 	{
 		if(isSelected)
 		{
@@ -79,9 +79,9 @@ class StateWithToggleValueSelector
 	/**
 	 * Clears the value stored for a specific state.
 	 */
-	public function clearValueForState(state:String, isSelected:Bool = false):Dynamic
+	public function clearValueForState(state:String, isSelected:Bool = false):T
 	{
-		var value:Dynamic;
+		var value:T;
 		if(isSelected)
 		{
 			value = this.stateToSelectedValue.get(state);
@@ -98,7 +98,7 @@ class StateWithToggleValueSelector
 	/**
 	 * Returns the value stored for a specific state.
 	 */
-	public function getValueForState(state:String, isSelected:Bool = false):Dynamic
+	public function getValueForState(state:String, isSelected:Bool = false):T
 	{
 		if(isSelected)
 		{
@@ -115,9 +115,9 @@ class StateWithToggleValueSelector
 	 * @param state			The current state.
 	 * @param oldValue		The previous value. May be reused for the new value.
 	 */
-	public function updateValue(target:Dynamic, state:String, oldValue:Dynamic = null):Dynamic
+	public function updateValue(target:Dynamic, state:String, oldValue:T = null):T
 	{
-		var value:Dynamic;
+		var value:T;
 		var toggle:IToggle = safe_cast(target, IToggle);
 		if(toggle != null && toggle.isSelected)
 		{

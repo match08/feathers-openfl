@@ -151,7 +151,7 @@ class ScreenFadeTransitionManager
 	 */
 	private function onTransition(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Dynamic):Void
 	{
-		if(this.skipNextTransition)
+		if(this.skipNextTransition != null)
 		{
 			this.skipNextTransition = false;
 			if(onComplete != null)

@@ -7,7 +7,6 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 import feathers.controls.supportClasses.IScreenNavigatorItem;
-import feathers.data.DataProperties;
 
 import starling.display.DisplayObject;
 
@@ -388,7 +387,7 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 */
 	public function setFunctionForPushEvent(eventType:String, action:Dynamic):Void
 	{
-		Reflect.setProperty(this._pushEvents, eventType, action);
+		Reflect.setField(this._pushEvents, eventType, action);
 	}
 
 	/**
@@ -409,7 +408,7 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 */
 	public function setScreenIDForPushEvent(eventType:String, screenID:String):Void
 	{
-		Reflect.setProperty(this._pushEvents, eventType, screenID);
+		Reflect.setField(this._pushEvents, eventType, screenID);
 	}
 
 	/**
@@ -560,11 +559,10 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		if(this._properties)
 		{
-			DataProperties.copyValuesFromDictionaryTo(_properties, screenInstance);
-			/*for(propertyName in Reflect.fields(this._properties))
+			for(propertyName in Reflect.fields(this._properties))
 			{
 				Reflect.setProperty(screenInstance, propertyName, Reflect.field(this._properties, propertyName));
-			}*/
+			}
 		}
 
 		return screenInstance;

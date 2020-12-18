@@ -13,7 +13,6 @@ import feathers.core.IFeathersControl;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.skins.IStyleProvider;
 
 import starling.display.DisplayObject;
@@ -915,12 +914,10 @@ import starling.display.DisplayObject;
 		if(!Std.is(value, PropertyProxy))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value.storage,newValue.storage);
-			/*
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._contentLabelProperties != null)
@@ -1270,8 +1267,7 @@ import starling.display.DisplayObject;
 			this.refreshContentSource(source);
 			return this.contentImage;
 		}
-	//	else if (this._contentSourceField != null && item && item.hasOwnProperty(this._contentSourceField))
-		else if(this._contentSourceField != null && (item!=null) && Reflect.hasField(item,_contentSourceField))
+		else if(this._contentSourceField != null && item && item.hasOwnProperty(this._contentSourceField))
 		{
 			source = Reflect.getProperty(item, this._contentSourceField);
 			this.refreshContentSource(source);
@@ -1290,8 +1286,7 @@ import starling.display.DisplayObject;
 			}
 			return cast(this.contentLabel, DisplayObject);
 		}
-	//	else if (this._contentLabelField != null && item && item.hasOwnProperty(this._contentLabelField))
-		else if(this._contentLabelField != null && (item!=null) && Reflect.hasField(item,_contentLabelField))
+		else if(this._contentLabelField != null && item && item.hasOwnProperty(this._contentLabelField))
 		{
 			labelResult = Reflect.getProperty(item, this._contentLabelField);
 			if(Std.is(labelResult, String))
@@ -1308,8 +1303,7 @@ import starling.display.DisplayObject;
 		{
 			return cast(this._contentFunction(item), DisplayObject);
 		}
-		//else if (this._contentField != null && item && item.hasOwnProperty(this._contentField))
-		else if(this._contentField != null && (item!=null) && Reflect.hasField(item,_contentField))
+		else if(this._contentField != null && item && item.hasOwnProperty(this._contentField))
 		{
 			return cast(Reflect.getProperty(item, this._contentField), DisplayObject);
 		}
@@ -1564,14 +1558,11 @@ import starling.display.DisplayObject;
 		{
 			return;
 		}
-		
-		
-		DataProperties.copyValuesFromDictionaryTo(_contentLabelProperties.storage,contentLabel);
-		/*for(propertyName in Reflect.fields(this._contentLabelProperties.storage))
+		for(propertyName in Reflect.fields(this._contentLabelProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._contentLabelProperties.storage, propertyName);
 			Reflect.setProperty(this.contentLabel, propertyName, propertyValue);
-		}*/
+		}
 	}
 
 	/**

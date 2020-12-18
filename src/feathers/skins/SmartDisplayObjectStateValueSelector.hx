@@ -212,9 +212,9 @@ class SmartDisplayObjectStateValueSelector extends StateWithToggleValueSelector<
 		var className:String = Type.getClassName(Type.getClass(target));
 		var instanceFields:Array<String> = Type.getInstanceFields(Type.getClass(displayObject));
 		if (this._displayObjectProperties != null)
-        	for (propertyName in _displayObjectProperties.storage.iterator())
+        	for (propertyName in Reflect.fields(this._displayObjectProperties.storage))
 			{
-				var propertyValue:Dynamic = _displayObjectProperties.storage[propertyName];
+				var propertyValue:Dynamic = Reflect.field(this._displayObjectProperties.storage, propertyName);
 				if (instanceFields.indexOf("get_" + propertyName) == -1)
 					trace('Couldn\'t find a property named "$propertyName" from $className"');
 				Reflect.setProperty(displayObject, propertyName, propertyValue);

@@ -516,7 +516,7 @@ class AutoComplete extends TextInput
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}

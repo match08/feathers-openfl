@@ -1,66 +1,62 @@
 package;
-
 import feathers.examples.helloWorld.Main;
+import openfl.errors.Error;
+import starling.utils.Max;
 
-import openfl.display.Loader;
-import openfl.display.Sprite;
-import openfl.display.StageAlign;
-// import openfl.display.StageOrientation;
-import openfl.display.StageScaleMode;
-import openfl.display3D.Context3DProfile;
-import openfl.display3D.Context3DRenderMode;
-import openfl.events.Event;
-// import openfl.filesystem.File;
-// import openfl.filesystem.FileMode;
-// import openfl.filesystem.FileStream;
-import openfl.geom.Rectangle;
-import openfl.system.Capabilities;
-import openfl.utils.ByteArray;
+import flash.display.Loader;
+import flash.display.Sprite;
+import flash.display.StageAlign;
+#if flash
+// import flash.display.StageOrientation;
+#end
+import flash.display.StageScaleMode;
+import flash.display3D.Context3DProfile;
+import flash.display3D.Context3DRenderMode;
+import flash.events.Event;
+// import flash.filesystem.File;
+#if flash
+// import flash.filesystem.FileMode;
+// import flash.filesystem.FileStream;
+#end
+import flash.geom.Rectangle;
+import flash.system.Capabilities;
+import flash.utils.ByteArray;
 
 import starling.core.Starling;
 
+//[SWF(width="960",height="640",frameRate="60",backgroundColor="#4a4137")]
 class HelloWorld extends Sprite
 {
 	public function new()
 	{
-		super ();
-		
-		// var menu:ContextMenu = new ContextMenu();
-		// menu.hideBuiltInItems();
-		// this.contextMenu = menu;
-		
+		super();
 		if(this.stage != null)
 		{
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this.stage.align = StageAlign.TOP_LEFT;
 		}
-		
-		#if mobile
 		this.mouseEnabled = this.mouseChildren = false;
+		#if 0
 		this.showLaunchImage();
-		#end
-
-		#if web
-		//pretends to be an iPhone Retina screen
-		DeviceCapabilities.dpi = 326;
-		DeviceCapabilities.screenPixelWidth = 960;
-		DeviceCapabilities.screenPixelHeight = 640;
-		#end
-		
 		this.loaderInfo.addEventListener(Event.COMPLETE, loaderInfo_completeHandler);
+		#end
+		this.loaderInfo_completeHandler(null);
 	}
 
 	private var _starling:Starling;
+	/*
 	private var _launchImage:Loader;
 	private var _savedAutoOrients:Bool;
+	*/
 
+	/*
 	private function showLaunchImage():Void
 	{
-		var filePath:String = null;
+		var filePath:String;
 		var isPortraitOnly:Bool = false;
 		if(Capabilities.manufacturer.indexOf("iOS") >= 0)
 		{
-			var isCurrentlyPortrait:Bool = true; //this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
+			var isCurrentlyPortrait:Boolean = this.stage.orientation == StageOrientation.DEFAULT || this.stage.orientation == StageOrientation.UPSIDE_DOWN;
 			if(Capabilities.screenResolutionX == 1242 && Capabilities.screenResolutionY == 2208)
 			{
 				//iphone 6 plus
@@ -102,59 +98,49 @@ class HelloWorld extends Sprite
 				filePath = "Default.png";
 			}
 		}
-
+		
 		if(filePath != null)
 		{
-			#if sys
-			if (sys.FileSystem.exists (filePath))
+			var file:File = File.applicationDirectory.resolvePath(filePath);
+			if(file.exists)
 			{
-				var bytes:ByteArray = ByteArray.fromFile (filePath);
+				var bytes:ByteArray = new ByteArray();
+				var stream:FileStream = new FileStream();
+				stream.open(file, FileMode.READ);
+				stream.readBytes(bytes, 0, stream.bytesAvailable);
+				stream.close();
 				this._launchImage = new Loader();
 				this._launchImage.loadBytes(bytes);
 				this.addChild(this._launchImage);
-				// this._savedAutoOrients = this.stage.autoOrients;
-				// this.stage.autoOrients = false;
+				this._savedAutoOrients = this.stage.autoOrients;
+				this.stage.autoOrients = false;
 				if(isPortraitOnly)
 				{
-					// this.stage.setOrientation(StageOrientation.DEFAULT);
+					this.stage.setOrientation(StageOrientation.DEFAULT);
 				}
 			}
-			#end
 		}
 	}
-	
-	private function start():Void
+	*/
+
+	private function loaderInfo_completeHandler(event:Event):Void
 	{
-		#if web
-		this.gotoAndStop(2);
-		this.graphics.clear();
-		
-		Starling.multitouchEnabled = true;
-		var MainType:Class = getDefinitionByName("feathers.examples.helloWorld.Main") as Class;
-		this._starling = new Starling(MainType, this.stage);
-		this._starling.supportHighResolutions = true;
-		this._starling.start();
-		#else
 		Starling.multitouchEnabled = true;
 		this._starling = new Starling(Main, this.stage, null, null, Context3DRenderMode.AUTO, Context3DProfile.BASELINE);
 		this._starling.supportHighResolutions = true;
 		this._starling.start();
-		#end
-		
+		/*
 		if(this._launchImage != null)
 		{
 			this._starling.addEventListener("rootCreated", starling_rootCreatedHandler);
 		}
+		*/
 
-		this.stage.addEventListener(Event.RESIZE, stage_resizeHandler, false, 0x7FFFFFFF /*int.MAX_VALUE*/, true);
+		this.stage.addEventListener(Event.RESIZE, stage_resizeHandler, false, Max.INT_MAX_VALUE, true);
 		this.stage.addEventListener(Event.DEACTIVATE, stage_deactivateHandler, false, 0, true);
 	}
 
-	private function loaderInfo_completeHandler(event:Event):Void
-	{
-		this.start();
-	}
-
+	/*
 	private function starling_rootCreatedHandler(event:Dynamic):Void
 	{
 		if(this._launchImage != null)
@@ -162,9 +148,10 @@ class HelloWorld extends Sprite
 			this.removeChild(this._launchImage);
 			this._launchImage.unloadAndStop(true);
 			this._launchImage = null;
-			// this.stage.autoOrients = this._savedAutoOrients;
+			this.stage.autoOrients = this._savedAutoOrients;
 		}
 	}
+	*/
 
 	private function stage_resizeHandler(event:Event):Void
 	{
@@ -178,7 +165,7 @@ class HelloWorld extends Sprite
 		{
 			this._starling.viewPort = viewPort;
 		}
-		catch(error:Dynamic) {}
+		catch(error:Error) {}
 	}
 
 	private function stage_deactivateHandler(event:Event):Void

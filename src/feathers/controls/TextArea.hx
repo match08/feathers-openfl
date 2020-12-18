@@ -10,7 +10,6 @@ import feathers.controls.text.ITextEditorViewPort;
 import feathers.controls.text.TextFieldTextEditorViewPort;
 import feathers.core.INativeFocusOwner;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import openfl.errors.ArgumentError;
@@ -757,11 +756,10 @@ class TextArea extends Scroller implements INativeFocusOwner
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			/*for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._textEditorProperties != null)
@@ -975,12 +973,11 @@ class TextArea extends Scroller implements INativeFocusOwner
 		this.textEditorViewPort.maxChars = this._maxChars;
 		this.textEditorViewPort.restrict = this._restrict;
 		this.textEditorViewPort.isEditable = this._isEditable;
-		/*for (propertyName in Reflect.fields(this._textEditorProperties.storage))
+		for (propertyName in Reflect.fields(this._textEditorProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._textEditorProperties.storage, propertyName);
 			Reflect.setProperty(this.textEditorViewPort, propertyName, propertyValue);
-		}*/
-		DataProperties.copyValuesFromDictionaryTo(_textEditorProperties.storage,textEditorViewPort);
+		}
 	}
 
 	/**

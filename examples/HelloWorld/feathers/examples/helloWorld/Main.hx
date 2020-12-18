@@ -1,44 +1,43 @@
 package feathers.examples.helloWorld;
-
 import feathers.controls.Button;
 import feathers.controls.Callout;
 import feathers.controls.Label;
-// import feathers.themes.MetalWorksMobileTheme;
+import feathers.text.BitmapFontTextFormat;
+import feathers.themes.MetalWorksMobileTheme;
 
 import starling.display.Sprite;
 import starling.events.Event;
 
 /**
-	* An example to help you get started with Feathers. Creates a "theme" and
-	* displays a Button component that you can trigger.
-	*
-	* <p>Note: This example requires the MetalWorksMobileTheme, which is one of
-	* the themes included with Feathers.</p>
-	*
-	* @see http://feathersui.com/help/getting-started.html
-	*/
-class Main extends Sprite
+ * An example to help you get started with Feathers. Creates a "theme" and
+ * displays a Button component that you can trigger.
+ *
+ * <p>Note: This example requires the MetalWorksMobileTheme, which is one of
+ * the themes included with Feathers.</p>
+ *
+ * @see http://feathersui.com/help/getting-started.html
+ */
+@:keep class Main extends Sprite
 {
 	/**
-		* Constructor.
-		*/
+	 * Constructor.
+	 */
 	public function new()
 	{
 		super();
-		
 		//we'll initialize things after we've been added to the stage
 		this.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 	}
 
 	/**
-		* The Feathers Button control that we'll be creating.
-		*/
+	 * The Feathers Button control that we'll be creating.
+	 */
 	private var button:Button;
 
 	/**
-		* Where the magic happens. Start after the main class has been added
-		* to the stage so that we can access the stage property.
-		*/
+	 * Where the magic happens. Start after the main class has been added
+	 * to the stage so that we can access the stage property.
+	 */
 	private function addedToStageHandler(event:Event):Void
 	{
 		this.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -50,7 +49,7 @@ class Main extends Sprite
 		//when your app starts up to ensure that all components are
 		//properly skinned.
 		//see http://feathersui.com/help/themes.html
-		// new MetalWorksMobileTheme();
+		new MetalWorksMobileTheme(false);
 
 		//create a button and give it some text to display.
 		this.button = new Button();
@@ -76,8 +75,8 @@ class Main extends Sprite
 	}
 
 	/**
-		* Listener for the Button's Event.TRIGGERED event.
-		*/
+	 * Listener for the Button's Event.TRIGGERED event.
+	 */
 	private function button_triggeredHandler(event:Event):Void
 	{
 		var label:Label = new Label();

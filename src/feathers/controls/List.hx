@@ -483,7 +483,7 @@ class List extends Scroller implements IFocusContainer
 	{
 		if(this._dataProvider == value)
 		{
-			return dataProvider;
+			return get_dataProvider();
 		}
 		if(this._dataProvider != null)
 		{
@@ -503,8 +503,6 @@ class List extends Scroller implements IFocusContainer
 			this._dataProvider.addEventListener(Event.CHANGE, dataProvider_changeHandler);
 		}
 
-		//trace("dataProvider L:"+ _dataProvider.length);
-		
 		//reset the scroll position because this is a drastic change and
 		//the data is probably completely different
 		this.horizontalScrollPosition = 0;
@@ -1172,14 +1170,12 @@ class List extends Scroller implements IFocusContainer
 		{
 			value = new PropertyProxy();
 		}
-		
 		if(!Std.is(value, PropertyProxy))
 		{
-			var newValue:PropertyProxy = new PropertyProxy(childProperties_onChange);
-			for(propertyName in value.storage.iterator())
+			var newValue:PropertyProxy = new PropertyProxy();
+			for(propertyName in Reflect.fields(value.storage))
 			{
-				value.setProperty(propertyName, value.storage[propertyName]);
-
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}
@@ -1187,7 +1183,7 @@ class List extends Scroller implements IFocusContainer
 		{
 			this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 		}
-		this._itemRendererProperties = cast(value, PropertyProxy);
+		this._itemRendererProperties = value;
 		if(this._itemRendererProperties != null)
 		{
 			this._itemRendererProperties.addOnChangeCallback(childProperties_onChange);
@@ -1456,7 +1452,6 @@ class List extends Scroller implements IFocusContainer
 	 */
 	private function dataProvider_changeHandler(event:Event):Void
 	{
-		
 		this.invalidate(INVALIDATION_FLAG_DATA);
 	}
 
@@ -1465,7 +1460,6 @@ class List extends Scroller implements IFocusContainer
 	 */
 	private function dataProvider_resetHandler(event:Event):Void
 	{
-	
 		this.horizontalScrollPosition = 0;
 		this.verticalScrollPosition = 0;
 
@@ -1482,12 +1476,11 @@ class List extends Scroller implements IFocusContainer
 		{
 			return;
 		}
-	
 		var selectionChanged:Bool = false;
 		var newIndices:Array<Int> = new Array<Int>();
 		var indexCount:Int = this._selectedIndices.length;
-		
-		for(i in 0...indexCount)
+		//for(var i:Int = 0; i < indexCount; i++)
+		for(i in 0 ... indexCount)
 		{
 			var currentIndex:Int = this._selectedIndices.getItemAt(i);
 			if(currentIndex >= index)
@@ -1515,8 +1508,8 @@ class List extends Scroller implements IFocusContainer
 		var selectionChanged:Bool = false;
 		var newIndices:Array<Int> = new Array<Int>();
 		var indexCount:Int = this._selectedIndices.length;
-		
-		for(i in 0... indexCount)
+		//for(var i:Int = 0; i < indexCount; i++)
+		for(i in 0 ... indexCount)
 		{
 			var currentIndex:Int = this._selectedIndices.getItemAt(i);
 			if(currentIndex == index)
@@ -1544,8 +1537,6 @@ class List extends Scroller implements IFocusContainer
 	 */
 	private function dataProvider_replaceItemHandler(event:Event, index:Int):Void
 	{
-		
-		
 		if(this._selectedIndex == -1)
 		{
 			return;

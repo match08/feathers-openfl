@@ -6,10 +6,8 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
-import com.jaimedominguez.dataType.Boolean;
 import feathers.core.FeathersControl;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.data.ListCollection;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.LayoutBoundsResult;
@@ -1462,11 +1460,10 @@ class ButtonGroup extends FeathersControl
 		if(!Std.is(value, PropertyProxy))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			/*for(propertyName in Reflect.fields(value.storage))
+			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
-			DataProperties.copyValuesFromDictionaryTo(value.storage,newValue.storage);
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._buttonProperties != null)
@@ -1545,9 +1542,6 @@ class ButtonGroup extends FeathersControl
 	{
 		if (this._buttonProperties == null)
 			return;
-			
-		//DataProperties.copyValuesFromObjectTo(_buttonProperties.storage, button);
-		
 		for(propertyName in Reflect.fields(this._buttonProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._buttonProperties.storage, propertyName);
@@ -1616,8 +1610,7 @@ class ButtonGroup extends FeathersControl
 	{
 		//if(Std.is(item, Dynamic))
 		{
-		//	if (item.hasOwnProperty(LABEL_FIELD))
-			if (Reflect.hasField(item,LABEL_FIELD))
+			if(item.hasOwnProperty(LABEL_FIELD))
 			{
 				button.label = cast(item.label, String);
 			}
@@ -1625,10 +1618,9 @@ class ButtonGroup extends FeathersControl
 			{
 				button.label = item.toString();
 			}
-			//if (item.hasOwnProperty(ENABLED_FIELD))
-			if (Reflect.hasField(item,ENABLED_FIELD))
+			if(item.hasOwnProperty(ENABLED_FIELD))
 			{
-				button.isEnabled = Boolean.isTrue(item.isEnabled);
+				button.isEnabled = cast(item.isEnabled, Bool);
 			}
 			else
 			{
@@ -1645,8 +1637,7 @@ class ButtonGroup extends FeathersControl
 			for (field in DEFAULT_BUTTON_EVENTS)
 			{
 				var removeListener:Bool = true;
-				//if (item.hasOwnProperty(field))
-				if (Reflect.hasField(item,field))
+				if(item.hasOwnProperty(field))
 				{
 					var listener:Dynamic = Reflect.getProperty(item, field);
 					if(listener == null)
@@ -1957,8 +1948,7 @@ class ButtonGroup extends FeathersControl
 		var index:Int = this.activeButtons.indexOf(button);
 		var item:Dynamic = this._dataProvider.getItemAt(index);
 		var field:String = event.type;
-		//if (item.hasOwnProperty(field))
-		if (Reflect.hasField(item,field))
+		if(item.hasOwnProperty(field))
 		{
 			var listener:Dynamic = Reflect.getProperty(item, field);
 			if(listener == null)

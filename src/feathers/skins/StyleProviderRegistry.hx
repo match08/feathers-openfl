@@ -152,7 +152,9 @@ class StyleProviderRegistry
 	 */
 	private function validateComponentClass(type:Class<Dynamic>):Void
 	{
-		if(!this._registerGlobally || Reflect.hasField(type, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
+		var hasField:Bool = Reflect.hasField(type, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME) || Type.getClassFields(type).indexOf(GLOBAL_STYLE_PROVIDER_PROPERTY_NAME)>-1;
+		
+		if(!this._registerGlobally || hasField)
 		{
 			return;
 		}

@@ -6,17 +6,14 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
-import feathers.controls.Button;
 import feathers.core.FeathersControl;
 import feathers.core.IFocusDisplayObject;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.FeathersMathUtil.clamp;
 import feathers.utils.math.FeathersMathUtil.roundToNearest;
-import openfl.utils.Dictionary;
 
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
@@ -573,14 +570,11 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	 */
 	public function set_value(newValue:Float):Float
 	{
-		
-		/*if(this._step != 0 && newValue != this._maximum && newValue != this._minimum)
+		if(this._step != 0 && newValue != this._maximum && newValue != this._minimum)
 		{
 			newValue = roundToNearest(newValue - this._minimum, this._step) + this._minimum;
-		}*/
-		
+		}
 		newValue = clamp(newValue, this._minimum, this._maximum);
-		
 		if(this._value == newValue)
 		{
 			return get_value();
@@ -1295,11 +1289,10 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value.storage))
+			for (propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._minimumTrackProperties != null)
@@ -1501,11 +1494,10 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value.storage))
+			for (propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._maximumTrackProperties != null)
@@ -1706,11 +1698,10 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value.storage))
+			for (propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._thumbProperties != null)
@@ -2035,9 +2026,11 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	{
 		if (this._thumbProperties == null)
 			return;
-			
-		DataProperties.copyValuesFromDictionaryTo(_thumbProperties.storage, thumb);
-	
+		for (propertyName in Reflect.fields(this._thumbProperties.storage))
+		{
+			var propertyValue:Dynamic = Reflect.field(this._thumbProperties.storage, propertyName);
+			Reflect.setProperty(this.thumb, propertyName, propertyValue);
+		}
 		this.thumb.visible = this._showThumb;
 	}
 	
@@ -2048,10 +2041,12 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	{
 		if (this._minimumTrackProperties == null)
 			return;
-			
-		DataProperties.copyValuesFromDictionaryTo(_minimumTrackProperties.storage, minimumTrack);
+		for (propertyName in Reflect.fields(this._minimumTrackProperties.storage))
+		{
+			var propertyValue:Dynamic = Reflect.field(this._minimumTrackProperties.storage, propertyName);
+			Reflect.setProperty(this.minimumTrack, propertyName, propertyValue);
+		}
 	}
-
 
 	/**
 	 * @private
@@ -2062,9 +2057,11 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return;
 		}
-		
-		DataProperties.copyValuesFromDictionaryTo(_maximumTrackProperties.storage, maximumTrack);
-		
+		for (propertyName in Reflect.fields(this._maximumTrackProperties.storage))
+		{
+			var propertyValue:Dynamic = Reflect.field(this._maximumTrackProperties.storage, propertyName);
+			Reflect.setProperty(this.maximumTrack, propertyName, propertyValue);
+		}
 	}
 
 	/**

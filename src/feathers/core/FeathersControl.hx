@@ -238,14 +238,11 @@ class FeathersControl extends Sprite implements IFeathersControl implements ILay
 	 */
 	public static var defaultTextEditorFactory:Void->ITextEditor = function():ITextEditor
 	{
-	trace("UUUUUUU");
-		
-		//#if (flash || html5)
-		//return new StageTextTextEditor();
-		//#else
-		
+		#if (flash || html5)
+		return new StageTextTextEditor();
+		#else
 		return new BitmapFontTextEditor();
-		//#end
+		#end
 	}
 
 	/**

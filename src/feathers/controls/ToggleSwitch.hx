@@ -11,7 +11,6 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.ITextRenderer;
 import feathers.core.IToggle;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import starling.utils.Max;
@@ -38,7 +37,7 @@ import starling.utils.SystemUtil;
 /**
  * Similar to a light switch with on and off states. Generally considered an
  * alternative to a check box.
- *f
+ *
  * <p>The following example programmatically selects a toggle switch and
  * listens for when the selection changes:</p>
  *
@@ -1619,12 +1618,10 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
-			
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._onTrackProperties != null)
@@ -1824,11 +1821,10 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._offTrackProperties != null)
@@ -2015,9 +2011,6 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 	 */
 	public function set_thumbProperties(value:PropertyProxy):PropertyProxy
 	{
-		
-		
-		
 		if(this._thumbProperties == value)
 		{
 			return get_thumbProperties();
@@ -2029,12 +2022,10 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*
 			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._thumbProperties != null)
@@ -2504,12 +2495,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		if(properties != null)
 		{
 			var displayRenderer:DisplayObject = cast(this.onTextRenderer, DisplayObject);
-			DataProperties.copyValuesFromDictionaryTo(properties.storage, displayRenderer);
-			/*for (propertyName in Reflect.fields(properties.storage))
+			for (propertyName in Reflect.fields(properties.storage))
 			{
 				var propertyValue:Dynamic = Reflect.field(properties.storage, propertyName);
 				Reflect.setProperty(displayRenderer, propertyName, propertyValue);
-			}*/
+			}
 		}
 		this.onTextRenderer.validate();
 		this.onTextRenderer.visible = true;
@@ -2545,14 +2535,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		if(properties != null)
 		{
 			var displayRenderer:DisplayObject = cast(this.offTextRenderer, DisplayObject);
-			
-			DataProperties.copyValuesFromDictionaryTo(properties.storage,displayRenderer);
-			/*
 			for (propertyName in Reflect.fields(properties.storage))
 			{
 				var propertyValue:Dynamic = Reflect.field(properties.storage, propertyName);
 				Reflect.setProperty(displayRenderer, propertyName, propertyValue);
-			}*/
+			}
 		}
 		this.offTextRenderer.validate();
 		this.offTextRenderer.visible = true;
@@ -2565,14 +2552,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 	{
 		if (this._thumbProperties == null)
 			return;
-			
-			DataProperties.copyValuesFromDictionaryTo(_thumbProperties.storage, thumb);
-		/*for (propertyName in Reflect.fields(this._thumbProperties.storage))
+		for (propertyName in Reflect.fields(this._thumbProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._thumbProperties.storage, propertyName);
 			Reflect.setProperty(this.thumb, propertyName, propertyValue);
-		}*/
-		
+		}
 		this.thumb.visible = this._showThumb;
 	}
 
@@ -2583,13 +2567,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 	{
 		if (this._onTrackProperties == null)
 			return;
-		DataProperties.copyValuesFromDictionaryTo(_onTrackProperties.storage, onTrack);	
-			
-		/*for (propertyName in Reflect.fields(this._onTrackProperties.storage))
+		for (propertyName in Reflect.fields(this._onTrackProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._onTrackProperties.storage, propertyName);
 			Reflect.setProperty(this.onTrack, propertyName, propertyValue);
-		}*/
+		}
 	}
 
 	/**
@@ -2601,12 +2583,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return;
 		}
-		DataProperties.copyValuesFromDictionaryTo(_offTrackProperties.storage, offTrack);
-		/*for (propertyName in Reflect.fields(this._offTrackProperties.storage))
+		for (propertyName in Reflect.fields(this._offTrackProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._offTrackProperties.storage, propertyName);
 			Reflect.setProperty(this.offTrack, propertyName, propertyValue);
-		}*/
+		}
 	}
 
 	/**

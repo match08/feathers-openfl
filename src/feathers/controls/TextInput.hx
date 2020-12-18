@@ -16,7 +16,6 @@ import feathers.core.ITextEditor;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.data.DataProperties;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.skins.StateValueSelector;
@@ -911,11 +910,10 @@ class TextInput extends FeathersControl implements IFocusDisplayObject implement
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._promptProperties != null)
@@ -1641,11 +1639,10 @@ class TextInput extends FeathersControl implements IFocusDisplayObject implement
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-			/*for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
-			}*/
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+			}
 			value = newValue;
 		}
 		if(this._textEditorProperties != null)
@@ -2075,12 +2072,11 @@ class TextInput extends FeathersControl implements IFocusDisplayObject implement
 		this.textEditor.maxChars = this._maxChars;
 		this.textEditor.restrict = this._restrict;
 		this.textEditor.isEditable = this._isEditable;
-		/*for (propertyName in Reflect.fields(this._textEditorProperties.storage))
+		for (propertyName in Reflect.fields(this._textEditorProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._textEditorProperties.storage, propertyName);
 			Reflect.setProperty(this.textEditor, propertyName, propertyValue);
-		}*/
-		DataProperties.copyValuesFromDictionaryTo(_textEditorProperties.storage, textEditor);
+		}
 	}
 
 	/**
@@ -2094,12 +2090,11 @@ class TextInput extends FeathersControl implements IFocusDisplayObject implement
 		}
 		this.promptTextRenderer.text = this._prompt;
 		var displayPrompt:DisplayObject = cast(this.promptTextRenderer, DisplayObject);
-		/*for (propertyName in Reflect.fields(this._promptProperties.storage))
+		for (propertyName in Reflect.fields(this._promptProperties.storage))
 		{
 			var propertyValue:Dynamic = Reflect.field(this._promptProperties.storage, propertyName);
 			Reflect.setProperty(this.promptTextRenderer, propertyName, propertyValue);
-		}*/
-		DataProperties.copyValuesFromDictionaryTo(_promptProperties.storage, promptTextRenderer);
+		}
 	}
 
 	/**

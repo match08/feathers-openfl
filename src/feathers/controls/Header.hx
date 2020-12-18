@@ -1653,14 +1653,10 @@ class Header extends FeathersControl
 	{
 		if (this._titleProperties == null)
 			return;
-			
-		for(key in _titleProperties.storage.iterator()){
-			var propertyName:String = key;
-			var propertyValue:Dynamic = _titleProperties.storage.get(propertyName);
-			if( propertyValue!=null){
-				
-				Reflect.setProperty(titleTextRenderer, propertyName, propertyValue);
-			}
+		for(propertyName in Reflect.fields(this._titleProperties.storage))
+		{
+			var propertyValue:Dynamic = Reflect.field(this._titleProperties.storage, propertyName);
+			Reflect.setProperty(this.titleTextRenderer, propertyName, propertyValue);
 		}
 	}
 

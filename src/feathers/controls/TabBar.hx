@@ -9,7 +9,6 @@ package feathers.controls;
 import feathers.core.FeathersControl;
 import feathers.core.PropertyProxy;
 import feathers.core.ToggleGroup;
-import feathers.data.DataProperties;
 import feathers.data.ListCollection;
 import feathers.events.CollectionEventType;
 import feathers.layout.HorizontalLayout;
@@ -1566,11 +1565,10 @@ class TabBar extends FeathersControl
 		if(!(Std.is(value, PropertyProxy)))
 		{
 			var newValue:PropertyProxy = new PropertyProxy();
-			DataProperties.copyValuesFromObjectTo(value, newValue.storage);
-		/*	for (propertyName in Reflect.fields(value))
+			for (propertyName in Reflect.fields(value))
 			{
 				newValue.setProperty(propertyName, Reflect.field(value, propertyName));
-			}*/
+			}
 			value = newValue;
 		}
 		if(this._tabProperties != null)

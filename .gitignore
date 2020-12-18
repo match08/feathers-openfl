@@ -15,4 +15,4 @@ lib/_gen
 npm-debug.log
 dist
 *.map
-*.tgz
+examples/HelloWorld/bin

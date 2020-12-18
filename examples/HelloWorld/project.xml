@@ -4,10 +4,20 @@
 	<meta title="Feathers | Hello World" package="com.feathersui.examples.HelloWorld" version="2.2.0" company="Bowler Hat LLC" />
 	<app main="HelloWorld" path="Export" file="HelloWorld" />
 	
-	<window width="960" height="640" background="0x4a4137" />
+	<window width="480" height="320" background="0x4a4137" />
+
+    <source path="../../src/themes/MetalWorksMobileTheme/source" />
+    
+    <assets path="../../src/themes/MetalWorksMobileTheme/assets/images/metalworks_mobile.xml" rename="assets/images/metalworks_mobile.xml" />
+    <assets path="../../src/themes/MetalWorksMobileTheme/assets/images/metalworks_mobile.png" rename="assets/images/metalworks_mobile.png" />
+    <assets path="../../src/themes/MetalWorksMobileTheme/assets/fonts/SourceSansPro-Regular.ttf" rename="assets/fonts/SourceSansPro-Regular.ttf" />
+    <assets path="../../src/themes/MetalWorksMobileTheme/assets/fonts/SourceSansPro-Semibold.ttf" rename="assets/fonts/SourceSansPro-Semibold.ttf" />
 	
 	<haxelib name="openfl" />
 	<haxelib name="starling" version="1.8.15" />
 	<haxelib name="feathers" />
+
+
+	<haxedef name="webgl" if="html5" />
 	
 </project>

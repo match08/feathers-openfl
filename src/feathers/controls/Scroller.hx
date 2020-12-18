@@ -1098,7 +1098,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}
@@ -1343,7 +1343,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}
@@ -5425,7 +5425,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private function childProperties_onChange(proxy:PropertyProxy):Void
+	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
 	{
 		this.invalidate(INVALIDATION_FLAG_STYLES);
 	}

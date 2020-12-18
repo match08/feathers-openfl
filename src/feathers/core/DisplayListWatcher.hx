@@ -6,7 +6,6 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
-
 import haxe.ds.WeakMap;
 #if 0
 import openfl.utils.Dictionary;
@@ -313,26 +312,17 @@ class DisplayListWatcher extends EventDispatcher
 	 */
 	public function setInitializerForClass(type:Class<Dynamic>, initializer:Dynamic->Void, withName:String = null):Void
 	{
-		
-		
-		
 		if(withName == null)
 		{
-			_initializerNoNameTypeMap[Type.getClassName(type)] = initializer;
+			this._initializerNoNameTypeMap[Type.getClassName(type)] = initializer;
 			return;
 		}
 		var nameTable:Map<String, Dynamic->Void> = this._initializerNameTypeMap[Type.getClassName(type)];
 		if(nameTable == null)
 		{
-			
 			this._initializerNameTypeMap[Type.getClassName(type)] = nameTable = new Map();
 		}
 		nameTable[withName] = initializer;
-		
-		
-		//trace("setInitializerForClass!" + Type.getClassName(type));
-	//	trace("initializer:" + initializer);
-		
 	}
 
 	/**
@@ -420,30 +410,26 @@ class DisplayListWatcher extends EventDispatcher
 	 */
 	public function initializeObject(target:DisplayObject):Void
 	{
-		
-		
 		var targetAsRequiredBaseClass:DisplayObject = cast(target, DisplayObject);
 		if(targetAsRequiredBaseClass != null)
 		{
-			var isInitialized:Bool = _initializeOnce && initializedObjects[targetAsRequiredBaseClass];
+			var isInitialized:Bool = this._initializeOnce && this.initializedObjects[targetAsRequiredBaseClass];
 			if(!isInitialized)
 			{
-				if(isExcluded(target))
+				if(this.isExcluded(target))
 				{
 					return;
 				}
 
 				if(this._initializeOnce)
 				{
-					
-					initializedObjects[targetAsRequiredBaseClass] = true;
+					this.initializedObjects[targetAsRequiredBaseClass] = true;
 				}
-				
-				processAllInitializers(target);
+				this.processAllInitializers(target);
 			}
 		}
-		
-		if(processRecursively)
+
+		if(this.processRecursively)
 		{
 			var targetAsContainer:DisplayObjectContainer = Std.is(target, DisplayObjectContainer) ? cast(target, DisplayObjectContainer) : null;
 			if(targetAsContainer != null)
@@ -463,24 +449,18 @@ class DisplayListWatcher extends EventDispatcher
 	 */
 	private function processAllInitializers(target:DisplayObject):Void
 	{
-	
-		//trace("processAllInitializers:" + target +"{"+type+"}");
 		var superTypeCount:Int = this._initializerSuperTypes.length;
 		var type:Class<Dynamic>;
 		for(i in 0 ... superTypeCount)
 		{
-			type = _initializerSuperTypes[i];
+			type = this._initializerSuperTypes[i];
 			if(Std.is(target, type))
 			{
-				applyAllStylesForTypeFromMaps(target, type, _initializerSuperTypeMap);
+				this.applyAllStylesForTypeFromMaps(target, type, this._initializerSuperTypeMap);
 			}
 		}
-		
 		type = Type.getClass(target);
-		//buttonInitializer
-		applyAllStylesForTypeFromMaps(target, type, _initializerNoNameTypeMap, _initializerNameTypeMap);
-		
-		//trace("processAllInitializers_END:" + target);
+		this.applyAllStylesForTypeFromMaps(target, type, this._initializerNoNameTypeMap, this._initializerNameTypeMap);
 	}
 
 	/**
@@ -488,16 +468,13 @@ class DisplayListWatcher extends EventDispatcher
 	 */
 	private function applyAllStylesForTypeFromMaps(target:DisplayObject, type:Class<Dynamic>, map:Map<String, Dynamic->Void>, nameMap:Map<String, Map<String, Dynamic->Void>> = null):Void
 	{
-		
 		var initializer:Dynamic->Void;
 		var hasNameInitializer:Bool = false;
 		if(Std.is(target, IFeathersControl) && nameMap != null)
 		{
-			
 			var nameTable:Map<String, Dynamic->Void> = nameMap[Type.getClassName(type)];
 			if(nameTable != null)
 			{
-				
 				var uiControl:IFeathersControl = cast(target, IFeathersControl);
 				var styleNameList:TokenList = uiControl.styleNameList;
 				var nameCount:Int = styleNameList.length;
@@ -509,7 +486,6 @@ class DisplayListWatcher extends EventDispatcher
 					{
 						hasNameInitializer = true;
 						initializer(target);
-						
 					}
 				}
 			}
@@ -520,7 +496,6 @@ class DisplayListWatcher extends EventDispatcher
 		}
 
 		initializer = map[Type.getClassName(type)];
-		
 		if(initializer != null)
 		{
 			initializer(target);

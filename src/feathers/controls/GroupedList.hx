@@ -1260,7 +1260,7 @@ class GroupedList extends Scroller implements IFocusContainer
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}
@@ -2046,7 +2046,7 @@ class GroupedList extends Scroller implements IFocusContainer
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}
@@ -2299,7 +2299,7 @@ class GroupedList extends Scroller implements IFocusContainer
 			var newValue:PropertyProxy = new PropertyProxy();
 			for(propertyName in Reflect.fields(value.storage))
 			{
-				Reflect.setProperty(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
+				Reflect.setField(newValue.storage, propertyName, Reflect.field(value.storage, propertyName));
 			}
 			value = newValue;
 		}

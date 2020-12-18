@@ -47,8 +47,7 @@ class FadeTween extends Tween
 
 	private function cleanupTween():Void
 	{
-		var newScreen:DisplayObject = cast(this.target, DisplayObject);
-		newScreen.alpha = 1;
+		this.target.alpha = 1;
 		if(this._otherTarget != null)
 		{
 			this._otherTarget.alpha = 1;

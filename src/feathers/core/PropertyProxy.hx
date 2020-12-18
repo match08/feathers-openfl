@@ -6,12 +6,10 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
-
-import openfl.utils.Dictionary;
-//#if 0
-//import flash.utils.Proxy;
-//import flash.utils.flash_proxy;
-//#end
+#if 0
+import flash.utils.Proxy;
+import flash.utils.flash_proxy;
+#end
 
 /**
  * Detects when its own properties have changed and dispatches an event
@@ -22,19 +20,17 @@ import openfl.utils.Dictionary;
  * is like saying, "If this nested <code>PropertyProxy</code> doesn't exist
  * yet, create one. If it does, use the existing one."</p>
  */
-/*dynamic*/ @:final class PropertyProxy /* implements Dynamic*/
+/*dynamic*/ @:final class PropertyProxy /*extends Proxy*/
 {
 	/**
 	 * Creates a <code>PropertyProxy</code> from a regular old <code>Object</code>.
 	 */
 	public static function fromObject(source:Dynamic, onChangeCallback:Dynamic = null):PropertyProxy
 	{
-	
 		var newValue:PropertyProxy = new PropertyProxy(onChangeCallback);
 		for(propertyName in Type.getInstanceFields(source))
 		{
-			
-			Reflect.setProperty(newValue._storage, propertyName, Reflect.getProperty(source, propertyName));
+			Reflect.setField(newValue._storage, propertyName, Reflect.getProperty(source, propertyName));
 		}
 		return newValue;
 	}
@@ -46,10 +42,8 @@ import openfl.utils.Dictionary;
 	{
 		if(onChangeCallback != null)
 		{
-			_onChangeCallbacks.push(onChangeCallback);
+			this._onChangeCallbacks[this._onChangeCallbacks.length] = onChangeCallback;
 		}
-		_storage = new Dictionary<String,Dynamic>();
-		
 	}
 
 	/**
@@ -70,15 +64,15 @@ import openfl.utils.Dictionary;
 	/**
 	 * @private
 	 */
-	private var _storage:Dictionary<String,Dynamic> = new Dictionary<String,Dynamic>();
-	public var storage(get, set):Dictionary<String,Dynamic>;
+	private var _storage:Dynamic = {};
+	public var storage(get, set):Dynamic;
 	
-	@:noComplete private function get_storage():Dictionary<String,Dynamic>
+	@:noComplete private function get_storage():Dynamic
 	{
 		return _storage;
 	}
 	
-	@:noComplete private function set_storage(value:Dynamic):Dictionary<String,Dynamic>
+	@:noComplete private function set_storage(value:Dynamic):Dynamic
 	{
 		for (propertyName in Reflect.fields(_storage))
 		{
@@ -101,63 +95,68 @@ import openfl.utils.Dictionary;
 	/**
 	 * @private
 	 */
-	public function getProperty(nameAsString:String):Dynamic
+	/*override flash_proxy public function getProperty(name:String):Dynamic
 	{
-		
-		if(!_storage.exists(nameAsString))
+		//if(this.flash_proxy::isAttribute(name))
 		{
-			var subProxy:PropertyProxy = new PropertyProxy(subProxy_onChange);
-			subProxy._subProxyName = nameAsString;
-			_storage[nameAsString] = subProxy;
-			_names[_names.length] = nameAsString;
-			fireOnChangeCallback(nameAsString);
+			//var nameAsString:String = Std.is(name, QName) ? QName(name).localName : name.toString();
+			var nameAsString:String = name;
+			if(!this._storage.exists(nameAsString))
+			{
+				var subProxy:PropertyProxy = new PropertyProxy(subProxy_onChange);
+				subProxy._subProxyName = nameAsString;
+				this._storage[nameAsString] = subProxy;
+				this._names[this._names.length] = nameAsString;
+				this.fireOnChangeCallback(nameAsString);
+			}
+			return this._storage[nameAsString];
 		}
-		return _storage[nameAsString];
-	
-		
+		return this._storage[name];
+	}*/
+
+	/**
+	 * @private
+	 */
+	/*override flash_proxy*/ public function setProperty(name:String, value:Dynamic):Void
+	{
+		//var nameAsString:String = Std.is(name, QName) ? QName(name).localName : name.toString();
+		var nameAsString:String = name;
+		Reflect.setField(this._storage, nameAsString, value);
+		if(this._names.indexOf(nameAsString) < 0)
+		{
+			this._names[this._names.length] = nameAsString;
+		}
+		this.fireOnChangeCallback(nameAsString);
 	}
 
 	/**
 	 * @private
 	 */
-	public function setProperty(nameAsString:String, value:Dynamic):Void
-	{
-		_storage[nameAsString]=value;
-		if(_names.indexOf(nameAsString) < 0)
-		{
-			_names[_names.length] = nameAsString;
-		}
-		fireOnChangeCallback(nameAsString);
-	}
-
-	/**
-	 * @private
-	 */
-	public function deleteProperty(name:String):Bool
+	/*override flash_proxy*/ public function deleteProperty(name:String):Bool
 	{
 		//var nameAsString:String = Std.is(name, QName) ? QName(name).localName : name.toString();
 		var nameAsString:String = name;
 		var index:Int = this._names.indexOf(nameAsString);
 		if(index == 0)
 		{
-			_names.shift();
+			this._names.shift();
 		}
 		else
 		{
-			var lastIndex:Int = _names.length - 1;
+			var lastIndex:Int = this._names.length - 1;
 			if(index == lastIndex)
 			{
-				_names.pop();
+				this._names.pop();
 			}
 			else
 			{
-				_names.splice(index, 1);
+				this._names.splice(index, 1);
 			}
 		}
-		var result:Bool = _storage.remove(nameAsString);
+		var result:Bool = this._storage.remove(nameAsString);
 		if(result)
 		{
-			fireOnChangeCallback(nameAsString);
+			this.fireOnChangeCallback(nameAsString);
 		}
 		return result;
 	}
@@ -228,11 +227,10 @@ import openfl.utils.Dictionary;
 	 */
 	private function toString():String
 	{
-		
-		var result:String = "[object PropertyProxy ";
-		for( propertyName in Reflect.fields(this.storage))
+		var result:String = "[object PropertyProxy";
+		for(propertyName in Reflect.fields(this.storage))
 		{
-			result += " " + propertyName + "=" + storage[propertyName];
+			result += " " + propertyName;
 		}
 		return result + "]";
 	}
@@ -243,8 +241,8 @@ import openfl.utils.Dictionary;
 	private function fireOnChangeCallback(forName:String):Void
 	{
 		var callbackCount:Int = this._onChangeCallbacks.length;
-		
-		for (i in 0...callbackCount)
+		//for(var i:Int = 0; i < callbackCount; i++)
+		for(i in 0 ... callbackCount)
 		{
 			var callback:Dynamic = this._onChangeCallbacks[i];
 			//callback(this, forName);

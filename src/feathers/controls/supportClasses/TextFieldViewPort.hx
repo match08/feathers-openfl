@@ -888,7 +888,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			this._textField.gridFitType = this._gridFitType;
 			this._textField.sharpness = this._sharpness;
 			#if flash
-			this._textField.thickness = this._thickness;
+			// this._textField.thickness = this._thickness;
 			#end
 			this._textField.cacheAsBitmap = this._cacheAsBitmap;
 			this._textField.x = this._paddingLeft;
