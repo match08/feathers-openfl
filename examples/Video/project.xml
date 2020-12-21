@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    
+    <set name="openfl-next" value="1" />
+	
+	<meta title="Video" package="feathers.examples" version="1.0.0" />
+	<app main="Video" file="Video" path="bin" />
+    
+    <window width="960" height="640" />
+	<source path="source" />
+    <source path="../../themes/MetalWorksDesktopTheme/source" />
+    
+    <assets path="../../themes/MetalWorksDesktopTheme/assets/images/metalworks_desktop.xml" rename="assets/images/metalworks_desktop.xml" />
+    <assets path="../../themes/MetalWorksDesktopTheme/assets/images/metalworks_desktop.png" rename="assets/images/metalworks_desktop.png" />
+    <assets path="../../themes/MetalWorksDesktopTheme/assets/fonts/SourceSansPro-Regular.ttf" rename="assets/fonts/SourceSansPro-Regular.ttf" />
+    <assets path="../../themes/MetalWorksDesktopTheme/assets/fonts/SourceSansPro-Semibold.ttf" rename="assets/fonts/SourceSansPro-Semibold.ttf" />
+	
+	
+	<haxelib name="openfl" />
+    <haxelib name="starling" />
+    <haxelib name="feathers" />
+    
+    <haxedef name="source-map-content" if="html5 || nodejs" />
+	<!-- <haxedef name="dom" if="html5" /> -->
+	<haxedef name="webgl" if="html5" />
+    
+    <haxedef name="disable_gl_renderer" />
+	<haxeflag name="-swf-version" value="11.8" if="flash" />
+	
+</project>
