@@ -8,5 +8,5 @@
 	"releasenote": "Initial port",
 	"contributors": [ "singmajesty" ],
 	"dependencies": {},
-	"classPath": "src"
+	"classPath": "source"
 }
