@@ -6,7 +6,9 @@ Unofficial port of Feathers UI Framework. Currently based on Feathers 2.2.0.
 Install
 -------
 
-    haxelib git openfl https://github.com/match08/feathers-openfl
+    haxelib install openfl
+    haxelib install starling 1.8.15
+    haxelib git https://github.com/match08/feathers-openfl
 
 Dependencies:
 
