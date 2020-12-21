@@ -1,28 +1,29 @@
-# Feathers UI 2.2.0
+# feathers-openfl
+Unofficial port of Feathers UI Framework. Currently based on Feathers 2.2.0.
 
-Say hello to [Feathers UI](http://feathersui.com/), a library of light-weight, skinnable, and extensible UI controls for mobile and desktop. The components run on [Starling Framework](http://starling-framework.org/) and the [Adobe Flash runtimes](http://gaming.adobe.com/technologies/) — offering blazing fast GPU powered graphics to create a smooth and responsive experience. Build completely standalone, native applications on iOS, Android, Windows, and Mac OS X, or target Adobe Flash Player in desktop browsers. Created by [Josh Tynjala](http://twitter.com/joshtynjala) from Bowler Hat LLC, Feathers UI is free and open source.
+[HTML5 version of ComponentExplorer](https://match08.github.io/feathers-openfl/examples/ComponentsExplorer/bin/html5/bin/)
 
-## Quick Links
+Install
+-------
 
-* [Website](http://feathersui.com/)
-* [Help](http://feathersui.com/help/)
-* [API Reference](http://feathersui.com/api-reference/)
-* [Discussion Forum](http://forum.starling-framework.org/forum/feathers)
-* [Github Project](https://github.com/BowlerHatLLC/feathers)
+    haxelib git openfl https://github.com/match08/feathers-openfl
 
-### News and Updates
+Dependencies:
 
-* [Like on Facebook](https://facebook.com/feathersui)
-* [Follow on Twitter](https://twitter.com/feathersui)
-* [Find on Google+](https://www.google.com/+feathersui)
+  [starling-openfl and its dependent libraries](https://github.com/openfl/starling-openfl)
 
-## Minimum Requirements
+Current Limitations
+-------------------
 
-* Adobe AIR 18.0 or newer for mobile apps
-* Adobe AIR 3.5 or newer for desktop apps
-* Adobe Flash Player 11.5 or newer for web browser apps
-* Starling Framework 1.7
-
-## Downloads
-
-To download the latest stable version of Feathers UI, visit [feathersui.com](http://feathersui.com/).
+* Currently only works on HTML5 and Node.js.
+* Current does not work correctly on original version of OpenFL and lime.
+* Only Next version of OpenFL is supported.
+* ScrollText doesn't work correctly.
+* TextInput doesn't work correctly.
+* Numeric Stepper is still buggy on HTML5.
+* TextBlockTextRenderer is not supported.
+* On HTML5, Texts are rendered with TextFieldTextRenderer.
+  * Texts on html5 may look diffrent from that of native targets.
+* On native targets, Texts are rendered with BitmapFontTextRenderer.
+  * Outline fonts are rendered with FreeType renderer implemented top of BitmapFont.
+* If you move the mouse cursor outside of the window, touch processor still think that cursor is inside.
