@@ -176,6 +176,7 @@ class FocusManager
 	 *
 	 * @see #getFocusManagerForStage()
 	 */
+	public static var focus(get, set):IFocusDisplayObject;
 	public static function get_focus():IFocusDisplayObject
 	{
 		var manager:IFocusManager = getFocusManagerForStage(Starling.current.stage);
@@ -189,7 +190,7 @@ class FocusManager
 	/**
 	 * @private
 	 */
-	public static function set_focus(value:IFocusDisplayObject):Void
+	public static function set_focus(value:IFocusDisplayObject):IFocusDisplayObject
 	{
 		var manager:IFocusManager = getFocusManagerForStage(Starling.current.stage);
 		if(manager == null)
@@ -197,6 +198,8 @@ class FocusManager
 			throw new Error(FOCUS_MANAGER_NOT_ENABLED_ERROR);
 		}
 		manager.focus = value;
+
+		return manager.focus;
 	}
 
 	/**
