@@ -3,6 +3,9 @@ Unofficial port of Feathers UI Framework. Currently based on Feathers 2.2.0.
 
 [HTML5 version of ComponentExplorer](https://match08.github.io/feathers-openfl/examples/ComponentsExplorer/bin/html5/bin/)
 
+[Documentation api-reference](https://match08.github.io/feathers-openfl/documentation/api-reference/templates)
+
+ 
 Install
 -------
 
