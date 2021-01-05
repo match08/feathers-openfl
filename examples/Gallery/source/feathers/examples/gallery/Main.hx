@@ -23,7 +23,7 @@ import starling.events.Event;
 
 class Main extends LayoutGroup
 {
-	inline private static var FLICKR_API_KEY = "";
+	inline private static var FLICKR_API_KEY = "71ba9982839b3f7dc983f85c3e43d9f5";
 
 	//used by the extended theme
 	inline public static var THUMBNAIL_LIST_NAME:String = "thumbnailList";
@@ -121,7 +121,9 @@ class Main extends LayoutGroup
 
 	private function apiLoader_completeListener(event:openfl.events.Event):Void
 	{
-		var result:Xml = this.apiLoader.data;
+		var result:Xml = Xml.parse(this.apiLoader.data).firstElement() ;
+		trace('result'+ result );
+		
 		if(result.get("stat") == "fail")
 		{
 			message.text = "Unable to load the list of images from Flickr at this time.";
@@ -129,6 +131,7 @@ class Main extends LayoutGroup
 		}
 		var items:Array<GalleryItem> = new Array();
 		var photosList:Iterator<Xml> = result.elementsNamed("photos").next().elementsNamed("photo");
+		
 		for(photoXML in photosList)
 		{
 			var url:String = StringTools.replace(FLICKR_PHOTO_URL, "{farm-id}", photoXML.get("farm"));
@@ -138,6 +141,7 @@ class Main extends LayoutGroup
 			var thumbURL:String = StringTools.replace(url, "{size}", "t");
 			url = StringTools.replace(url, "{size}", "b");
 			var title:String = photoXML.get("title");
+			trace(title, url, thumbURL);
 			items.push(new GalleryItem(title, url, thumbURL));
 		}
 

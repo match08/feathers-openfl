@@ -7,6 +7,7 @@ import feathers.events.FeathersEventType;
 import starling.utils.Max;
 
 import openfl.geom.Point;
+import openfl.Vector;
 
 import starling.animation.Transitions;
 import starling.animation.Tween;
@@ -15,6 +16,7 @@ import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
+
 
 class GalleryItemRenderer extends FeathersControl implements IListItemRenderer
 {
@@ -26,7 +28,7 @@ class GalleryItemRenderer extends FeathersControl implements IListItemRenderer
 	/**
 	 * @private
 	 */
-	private static var HELPER_TOUCHES_VECTOR:Array<Touch> = new Array();
+	private static var HELPER_TOUCHES_VECTOR:Vector<Touch> = new Vector();
 
 	/**
 	 * @private
@@ -227,7 +229,6 @@ class GalleryItemRenderer extends FeathersControl implements IListItemRenderer
 		}
 
 		sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
-
 		if(sizeInvalid)
 		{
 			this.image.width = this.actualWidth;
@@ -247,7 +248,7 @@ class GalleryItemRenderer extends FeathersControl implements IListItemRenderer
 			return false;
 		}
 
-		this.image.width = this.image.height = Math.NaN;
+		// this.image.width = this.image.height = Math.NaN;
 		this.image.validate();
 		var newWidth:Float = this.explicitWidth;
 		var boundsFromCache:Point;
@@ -333,7 +334,7 @@ class GalleryItemRenderer extends FeathersControl implements IListItemRenderer
 	 */
 	private function touchHandler(event:TouchEvent):Void
 	{
-		var touches:Array<Touch> = event.getTouches(this, null, HELPER_TOUCHES_VECTOR);
+		var touches:Vector<Touch> = event.getTouches(this, null, HELPER_TOUCHES_VECTOR);
 		if(touches.length == 0)
 		{
 			return;
