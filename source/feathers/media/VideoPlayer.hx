@@ -1004,26 +1004,15 @@ class VideoPlayer extends BaseTimedMediaPlayer implements IVideoPlayer
 
 /*dynamic*/ class VideoPlayerNetStreamClient
 {
+	public var onMetaData:Dynamic->Void;
+	public var onPlayStatus:Dynamic->Void;
+
 	public function new(onMetaDataCallback:Dynamic->Void, onPlayStatusCallback:Dynamic->Void)
 	{
-		this.onMetaDataCallback = onMetaDataCallback;
-		this.onPlayStatusCallback = onPlayStatusCallback;
-	}
-
-	public var onMetaDataCallback:Dynamic->Void;
-
-	public function onMetaData(metadata:Dynamic):Void
-	{
-		this.onMetaDataCallback(metadata);
-	}
-
-	public var onPlayStatusCallback:Dynamic->Void;
-
-	public function onPlayStatus(data:Dynamic):Void
-	{
-		if(this.onPlayStatusCallback != null)
+		this.onMetaData = onMetaDataCallback;
+		if(this.onPlayStatus != null)
 		{
-			this.onPlayStatusCallback(data);
+			this.onPlayStatus = onPlayStatusCallback;
 		}
 	}
 }
