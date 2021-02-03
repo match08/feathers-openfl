@@ -67,10 +67,13 @@ import feathers.controls.renderers.BaseDefaultItemRenderer;
 import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
 import feathers.controls.renderers.DefaultGroupedListItemRenderer;
 import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.text.StageTextTextEditor;
+
 #if flash
 import feathers.controls.text.TextBlockTextEditor;
 import feathers.controls.text.TextBlockTextRenderer;
+import feathers.controls.text.StageTextTextEditor;
+#else 
+import feathers.controls.text.TextFieldTextEditor;
 #end
 import feathers.core.FeathersControl;
 import feathers.core.PopUpManager;
@@ -255,9 +258,14 @@ class BaseMetalWorksMobileTheme extends StyleNameFunctionTheme
 	 * The default global text editor factory for this theme creates a
 	 * StageTextTextEditor.
 	 */
-	private static function textEditorFactory():StageTextTextEditor
+	private static function textEditorFactory():#if flash StageTextTextEditor #else TextFieldTextEditor #end
 	{
+		
+		#if flash
 		return new StageTextTextEditor();
+		#else 
+		return new TextFieldTextEditor();
+		#end 
 	}
 
 	/**

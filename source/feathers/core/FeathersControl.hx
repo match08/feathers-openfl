@@ -8,7 +8,11 @@ accordance with the terms of the accompanying license agreement.
 package feathers.core;
 import feathers.controls.text.BitmapFontTextEditor;
 import feathers.controls.text.BitmapFontTextRenderer;
+#if flash
 import feathers.controls.text.StageTextTextEditor;
+#else 
+import feathers.controls.text.TextFieldTextEditor;
+#end
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayoutData;
 import feathers.layout.ILayoutDisplayObject;
@@ -238,8 +242,10 @@ class FeathersControl extends Sprite implements IFeathersControl implements ILay
 	 */
 	public static var defaultTextEditorFactory:Void->ITextEditor = function():ITextEditor
 	{
-		#if (flash || html5)
+		#if flash
 		return new StageTextTextEditor();
+		#elseif html5
+		return new TextFieldTextEditor();
 		#else
 		return new BitmapFontTextEditor();
 		#end
