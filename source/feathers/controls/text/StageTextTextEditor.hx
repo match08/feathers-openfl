@@ -1970,9 +1970,10 @@ class StageTextTextEditor extends FeathersControl implements IMultilineTextEdito
 		#end
 		{
 			#if 0
-			StageTextType = flash.text.StageText;
+			StageTextType = openfl.text.StageText;
 			#else
 			StageTextType = null;
+			throw new Error("StageText Type is only flash!");
 			#end
 			initOptions = { multiline: this._multiline };
 		}
