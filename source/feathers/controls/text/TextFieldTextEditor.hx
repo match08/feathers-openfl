@@ -1756,6 +1756,7 @@ class TextFieldTextEditor extends FeathersControl implements ITextEditor impleme
 					this._pendingSelectionEndIndex = this.textField.selectionEndIndex;
 				}
 				textField.text = this._text;
+				
 			}
 		}
 	}
@@ -2009,7 +2010,9 @@ class TextFieldTextEditor extends FeathersControl implements ITextEditor impleme
 			HELPER_MATRIX.scale(globalScaleX, globalScaleY);
 		}
 		var bitmapData:BitmapData = new BitmapData(this._snapshotWidth, this._snapshotHeight, true, 0x00ff00ff);
+		this.textField.visible = true;
 		bitmapData.draw(this.textField, HELPER_MATRIX, null, null, this._textFieldSnapshotClipRect);
+		this.textField.visible = false;
 		var newTexture:Texture = null;
 		if(this.textSnapshot == null || this._needsNewTexture)
 		{
@@ -2087,6 +2090,7 @@ class TextFieldTextEditor extends FeathersControl implements ITextEditor impleme
 		{
 			this.textSnapshot.visible = !this._textFieldHasFocus;
 		}
+	
 		this.textField.visible = this._textFieldHasFocus;
 
 		if(this._textFieldHasFocus)

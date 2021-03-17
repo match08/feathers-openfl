@@ -2390,10 +2390,17 @@ class BaseMetalWorksMobileTheme extends StyleNameFunctionTheme
 		input.gap = this.smallGutterSize;
 		input.padding = this.smallGutterSize;
 
+		#if flash	
 		input.textEditorProperties.setProperty("fontFamily", "Helvetica");
 		input.textEditorProperties.setProperty("fontSize", this.inputFontSize);
 		input.textEditorProperties.setProperty("color", LIGHT_TEXT_COLOR);
 		input.textEditorProperties.setProperty("disabledColor", DISABLED_TEXT_COLOR);
+		#else
+		input.textEditorProperties.setProperty(ELEMENT_FORMAT_STR, this.lightElementFormat);
+		input.textEditorProperties.setProperty(DISABLED_ELEMENT_FORMAT_STR, this.disabledElementFormat);
+		// input.textRendererProperties.setProperty(ELEMENT_FORMAT_STR, this.lightElementFormat);
+		// input.textRendererProperties.setProperty(DISABLED_ELEMENT_FORMAT_STR, this.disabledElementFormat);
+		#end
 
 		input.promptProperties.setProperty(ELEMENT_FORMAT_STR, this.lightElementFormat);
 		input.promptProperties.setProperty(DISABLED_ELEMENT_FORMAT_STR, this.disabledElementFormat);
